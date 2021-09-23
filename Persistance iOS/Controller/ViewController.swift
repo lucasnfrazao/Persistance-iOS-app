@@ -9,7 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let itemArray = ["Chocolate", "Coffee", "Bread"]
+    var itemArray = ["Chocolate", "Coffee", "Bread"]
+    
+    let defaults = UserDefaults.standard
     
     let toDoListView = ToDoListView()
     
@@ -18,12 +20,48 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if let items = defaults.array(forKey: "ToDoListItems") as? [String] {
+            itemArray = items
+        }
+        
         navigationItem.title = "ToDoListy"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ToDoListCell.self, forCellReuseIdentifier: "ToDoListCell")
+        
+    }
+    
+    @objc func pressedButton(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { alert in
+            
+            self.itemArray.append(textField.text ?? "Couldn't get item")
+            
+            self.defaults.set(self.itemArray, forKey: "ToDoListItems")
+            
+            self.tableView.reloadData()
+            
+        }
+        
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        self.present(alert, animated: true)
+        
+        
     }
 
     override func loadView() {
