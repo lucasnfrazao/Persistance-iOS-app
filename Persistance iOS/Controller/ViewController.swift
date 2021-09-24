@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     
     let tableView = UITableView()
     
+    private var search = UISearchController(searchResultsController: nil)
+    
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
@@ -30,6 +32,10 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
         
+        search.searchBar.delegate = self
+        
+        search.searchBar.placeholder = "Find Tasks"
+        self.navigationItem.searchController = search
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -146,3 +152,6 @@ extension ViewController: UITableViewDataSource {
 
 }
 
+extension ViewController: UISearchBarDelegate {
+    
+}
