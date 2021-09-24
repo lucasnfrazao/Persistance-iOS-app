@@ -6,24 +6,25 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     
-    var itemArray = ["Chocolate", "Coffee", "Bread"]
-    
-    let defaults = UserDefaults.standard
+    var itemArray: [Item] = []
+
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let toDoListView = ToDoListView()
     
     let tableView = UITableView()
+    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        if let items = defaults.array(forKey: "ToDoListItems") as? [String] {
-            itemArray = items
-        }
+      
+        loadItems()
         
         navigationItem.title = "ToDoListy"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -44,12 +45,15 @@ class ViewController: UIViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { alert in
             
-            self.itemArray.append(textField.text ?? "Couldn't get item")
+            let newItem = Item(context: self.context)
+            newItem.title = textField.text!
+            newItem.done = false
             
-            self.defaults.set(self.itemArray, forKey: "ToDoListItems")
+            self.itemArray.append(newItem)
             
-            self.tableView.reloadData()
+            self.saveItems()
             
+            //self.defaults.set(self.itemArray, forKey: "ToDoListItems")
         }
         
         alert.addTextField { alertTextField in
@@ -60,8 +64,6 @@ class ViewController: UIViewController {
         alert.addAction(action)
         
         self.present(alert, animated: true)
-        
-        
     }
 
     override func loadView() {
@@ -84,11 +86,11 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        let item = itemArray[indexPath.row]
+
+        item.done = !item.done
+        
+        self.saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -107,11 +109,40 @@ extension ViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath) as! ToDoListCell
         
-        cell.title.text = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
+        
+        cell.title.text = item.title
+        
+        //Ternary Operator
+        cell.accessoryType = item.done ? .checkmark : .none
 
         return cell
     }
 
+    
+    func saveItems() {
+        
+        do {
+            try context.save()
+        }
+        catch {
+            print(error)
+        }
+        
+        self.tableView.reloadData()
+        
+    }
+    
+    func loadItems() {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray = try context.fetch(request)
+        }
+        catch {
+            print(error)
+        }
+        
+    }
 
 }
 
