@@ -6,11 +6,13 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UIViewController {
 
-    var categories = [Category]()
+    let realm = try! Realm()
+    
+    var categories: Results<Category>?
     
     let tableView = UITableView()
     
@@ -54,12 +56,10 @@ class CategoryViewController: UIViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { alert in
             
-            let newCategory = Category(context: self.context)
+            let newCategory = Category()
             newCategory.name = textField.text!
             
-            self.categories.append(newCategory)
-            
-            self.saveCategory()
+            self.save(category: newCategory)
         }
         
         alert.addTextField { alertTextField in
@@ -72,10 +72,12 @@ class CategoryViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    func saveCategory() {
+    func save(category: Category) {
         
         do {
-            try context.save()
+            try realm.write{
+                realm.add(category)
+            }
         }
         catch {
             print(error.localizedDescription)
@@ -85,17 +87,12 @@ class CategoryViewController: UIViewController {
         
     }
     
-    func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
-        
-        do {
-            categories = try context.fetch(request)
-        }
-        catch {
-            print(error)
-        }
+    func loadCategories() {
+
+        categories = realm.objects(Category.self)
         
         tableView.reloadData()
-        
+
     }
 
 
@@ -109,7 +106,7 @@ extension CategoryViewController: UITableViewDelegate {
         let destinationVC = ViewController()
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categories[indexPath.row]
+            destinationVC.selectedCategory = categories?[indexPath.row]
         }
         
         self.navigationController?.pushViewController(destinationVC, animated: true)
@@ -123,7 +120,7 @@ extension CategoryViewController: UITableViewDelegate {
         let destinationVC = segue.destination as? ViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC?.selectedCategory = categories[indexPath.row]
+            destinationVC?.selectedCategory = categories?[indexPath.row]
         }
         
     }
@@ -134,14 +131,14 @@ extension CategoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return categories.count
+        return categories?.count ?? 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath) as! ToDoListCell
 
-        cell.title.text = categories[indexPath.row].name
+        cell.title.text = categories?[indexPath.row].name ?? "No Categories Yet"
         
         return cell
     }
