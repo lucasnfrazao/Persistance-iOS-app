@@ -11,6 +11,12 @@ import CoreData
 class ViewController: UIViewController {
     
     var itemArray: [Item] = []
+    
+    var selectedCategory: Category? {
+        didSet {
+            loadItems()
+        }
+    }
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -25,10 +31,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-      
-        loadItems()
         
-        navigationItem.title = "ToDoListy"
+        navigationItem.title = selectedCategory?.name
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
         
@@ -54,6 +58,7 @@ class ViewController: UIViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             
             self.itemArray.append(newItem)
             
@@ -137,7 +142,21 @@ extension ViewController: UITableViewDataSource {
         
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(),_ predicate: NSPredicate? = nil) {
+        
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let aditionalPredicate = predicate {
+            
+            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, aditionalPredicate])
+                
+            request.predicate = compoundPredicate
+            
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+        
         
         do {
             itemArray = try context.fetch(request)
@@ -145,7 +164,7 @@ extension ViewController: UITableViewDataSource {
         catch {
             print(error)
         }
-        
+    
         tableView.reloadData()
         
     }
@@ -158,11 +177,11 @@ extension ViewController: UISearchBarDelegate {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate)
         
     }
     
@@ -172,11 +191,11 @@ extension ViewController: UISearchBarDelegate {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate)
         
         if searchBar.text?.count == 0 {
             loadItems()
@@ -187,6 +206,10 @@ extension ViewController: UISearchBarDelegate {
             
         }
         
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        loadItems()
     }
     
 }
