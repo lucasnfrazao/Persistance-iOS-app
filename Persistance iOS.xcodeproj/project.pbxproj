@@ -23,6 +23,8 @@
 		CF32FB9026F95CEA0058A19D /* ToDoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF32FB8F26F95CEA0058A19D /* ToDoListCell.swift */; };
 		CF7CFAD626FE7AD90059465F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */; };
 		CFB0D17226FFAA060019DA8B /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */; };
+		CFCA8DA527185004005D7456 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DA427185004005D7456 /* CategoryCell.swift */; };
+		CFCA8DA72718533E005D7456 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DA62718533E005D7456 /* EmojiTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		CF32FB8F26F95CEA0058A19D /* ToDoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCell.swift; sourceTree = "<group>"; };
 		CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDeviceExtension.swift; path = "Persistance iOS/View/UIDeviceExtension.swift"; sourceTree = SOURCE_ROOT; };
+		CFCA8DA427185004005D7456 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		CFCA8DA62718533E005D7456 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,7 @@
 				CF32FB5E26F958040058A19D /* ViewController.swift */,
 				CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */,
 				CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */,
+				CFCA8DA62718533E005D7456 /* EmojiTextField.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 			children = (
 				CF32FB8D26F959270058A19D /* ToDoListView.swift */,
 				CF32FB8F26F95CEA0058A19D /* ToDoListCell.swift */,
+				CFCA8DA427185004005D7456 /* CategoryCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -316,6 +322,8 @@
 				CF32FB9026F95CEA0058A19D /* ToDoListCell.swift in Sources */,
 				CF099AA727170108006EB7F6 /* Item.swift in Sources */,
 				CF32FB5D26F958040058A19D /* SceneDelegate.swift in Sources */,
+				CFCA8DA72718533E005D7456 /* EmojiTextField.swift in Sources */,
+				CFCA8DA527185004005D7456 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

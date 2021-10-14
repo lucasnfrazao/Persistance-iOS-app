@@ -27,7 +27,7 @@ class CategoryViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(ToDoListCell.self, forCellReuseIdentifier: "ToDoListCell")
+        tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
         
         loadCategories()
 
@@ -50,21 +50,28 @@ class CategoryViewController: UIViewController {
     
     @objc func pressedButton(_ sender: UIBarButtonItem) {
         
-        var textField = UITextField()
+        var categoryTextField = UITextField()
+        var emojiTextField = UITextField()
         
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { alert in
             
             let newCategory = Category()
-            newCategory.name = textField.text!
+            newCategory.name = categoryTextField.text!
+            newCategory.emoji = emojiTextField.text!
             
             self.save(category: newCategory)
         }
         
         alert.addTextField { alertTextField in
             alertTextField.placeholder = "Add new Category"
-            textField = alertTextField
+            categoryTextField = alertTextField
+        }
+        
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Add Emoji"
+            emojiTextField = alertTextField
         }
         
         alert.addAction(action)
@@ -101,6 +108,10 @@ class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 45
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
         let destinationVC = ViewController()
@@ -136,9 +147,10 @@ extension CategoryViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath) as! ToDoListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
 
         cell.title.text = categories?[indexPath.row].name ?? "No Categories Yet"
+        cell.emoji.text = categories?[indexPath.row].emoji ?? "🤯"
         
         return cell
     }

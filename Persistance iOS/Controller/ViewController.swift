@@ -38,7 +38,9 @@ class ViewController: UIViewController {
         
         search.searchBar.delegate = self
         
-        search.searchBar.placeholder = "Find Tasks"
+        if let category = selectedCategory?.name {
+            search.searchBar.placeholder = "Find \(category)"
+        }
         self.navigationItem.searchController = search
         
         tableView.delegate = self
@@ -61,6 +63,7 @@ class ViewController: UIViewController {
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
+                        newItem.dataCreated = Date()
                         currentCategory.items.append(newItem)
                     }
                 } catch {
@@ -102,11 +105,19 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-//        let item = toDoItems?[indexPath.row]
-//
-//        item?.done = !(item?.done ?? false)
-//
-//        self.saveItems()
+        if let item = toDoItems?[indexPath.row] {
+            
+            do {
+                try realm.write({
+                    item.done = !item.done
+                })
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -149,27 +160,18 @@ extension ViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
-
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-
-        loadItems()
+        toDoItems = toDoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dataCreated", ascending: true)
+        tableView.reloadData()
 
     }
 
-
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+       
+        //loadItems()
+        
+    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@",  searchBar.text!)
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-
-        loadItems()
 
         if searchBar.text?.count == 0 {
             loadItems()
@@ -182,8 +184,6 @@ extension ViewController: UISearchBarDelegate {
 
     }
 
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        loadItems()
-    }
+   
 
 }
