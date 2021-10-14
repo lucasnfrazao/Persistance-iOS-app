@@ -29,6 +29,7 @@ class CategoryViewController: SwipeViewController, UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
         navigationItem.title = "ThingsNot2Do"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))

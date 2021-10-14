@@ -35,6 +35,7 @@ class ViewController: UIViewController {
         navigationItem.title = selectedCategory?.name
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
+        navigationController?.navigationBar.tintColor = .label
         
         search.searchBar.delegate = self
         
