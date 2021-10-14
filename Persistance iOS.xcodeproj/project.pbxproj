@@ -25,6 +25,7 @@
 		CFB0D17226FFAA060019DA8B /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */; };
 		CFCA8DA527185004005D7456 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DA427185004005D7456 /* CategoryCell.swift */; };
 		CFCA8DAA27185593005D7456 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = CFCA8DA927185593005D7456 /* SwipeCellKit */; };
+		CFCA8DAC271858A8005D7456 /* SwipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DAB271858A8005D7456 /* SwipeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDeviceExtension.swift; path = "Persistance iOS/View/UIDeviceExtension.swift"; sourceTree = SOURCE_ROOT; };
 		CFCA8DA427185004005D7456 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		CFCA8DAB271858A8005D7456 /* SwipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				CF32FB5E26F958040058A19D /* ViewController.swift */,
 				CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */,
 				CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */,
+				CFCA8DAB271858A8005D7456 /* SwipeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			files = (
 				CF32FB5F26F958040058A19D /* ViewController.swift in Sources */,
 				CF32FB5B26F958040058A19D /* AppDelegate.swift in Sources */,
+				CFCA8DAC271858A8005D7456 /* SwipeViewController.swift in Sources */,
 				CF7CFAD626FE7AD90059465F /* CategoryViewController.swift in Sources */,
 				CF32FB8E26F959270058A19D /* ToDoListView.swift in Sources */,
 				CFB0D17226FFAA060019DA8B /* UIDeviceExtension.swift in Sources */,
