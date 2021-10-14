@@ -17,20 +17,21 @@ class CategoryViewController: SwipeViewController, UITableViewDelegate {
     
     let tableView = UITableView()
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "ToDoListy"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
-        
+     
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
         
         loadCategories()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        navigationItem.title = "ThingsNot2Do"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressedButton(_:)))
         
     }
     

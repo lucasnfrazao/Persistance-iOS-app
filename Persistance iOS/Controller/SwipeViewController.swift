@@ -20,6 +20,28 @@ class SwipeViewController: UIViewController, SwipeTableViewCellDelegate {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        guard let navBar = self.navigationController?.navigationBar else {fatalError("Navigation Controller does not exist")}
+        
+        navBar.tintColor = .white
+        
+        navBar.barStyle = .black
+        navBar.isTranslucent = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemOrange
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // With a red background, make the title more readable.
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // With a red background, make the title more readable.
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+    }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
