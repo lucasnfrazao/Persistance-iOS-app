@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class CategoryCell: UITableViewCell {
+class CategoryCell: SwipeTableViewCell {
 
     lazy var title : UILabel = {
         let view = UILabel()

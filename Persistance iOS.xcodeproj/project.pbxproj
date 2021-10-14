@@ -24,7 +24,7 @@
 		CF7CFAD626FE7AD90059465F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */; };
 		CFB0D17226FFAA060019DA8B /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */; };
 		CFCA8DA527185004005D7456 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DA427185004005D7456 /* CategoryCell.swift */; };
-		CFCA8DA72718533E005D7456 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA8DA62718533E005D7456 /* EmojiTextField.swift */; };
+		CFCA8DAA27185593005D7456 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = CFCA8DA927185593005D7456 /* SwipeCellKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,6 @@
 		CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDeviceExtension.swift; path = "Persistance iOS/View/UIDeviceExtension.swift"; sourceTree = SOURCE_ROOT; };
 		CFCA8DA427185004005D7456 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
-		CFCA8DA62718533E005D7456 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF099AA5271700F5006EB7F6 /* RealmSwift in Frameworks */,
+				CFCA8DAA27185593005D7456 /* SwipeCellKit in Frameworks */,
 				CF099AA3271700F5006EB7F6 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,7 +152,6 @@
 				CF32FB5E26F958040058A19D /* ViewController.swift */,
 				CFB0D17126FFAA060019DA8B /* UIDeviceExtension.swift */,
 				CF7CFAD526FE7AD90059465F /* CategoryViewController.swift */,
-				CFCA8DA62718533E005D7456 /* EmojiTextField.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -195,6 +194,7 @@
 			packageProductDependencies = (
 				CF099AA2271700F5006EB7F6 /* Realm */,
 				CF099AA4271700F5006EB7F6 /* RealmSwift */,
+				CFCA8DA927185593005D7456 /* SwipeCellKit */,
 			);
 			productName = "Persistance iOS";
 			productReference = CF32FB5726F958040058A19D /* Persistance iOS.app */;
@@ -270,6 +270,7 @@
 			mainGroup = CF32FB4E26F958040058A19D;
 			packageReferences = (
 				CF099AA1271700F5006EB7F6 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				CFCA8DA827185593005D7456 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 			);
 			productRefGroup = CF32FB5826F958040058A19D /* Products */;
 			projectDirPath = "";
@@ -322,7 +323,6 @@
 				CF32FB9026F95CEA0058A19D /* ToDoListCell.swift in Sources */,
 				CF099AA727170108006EB7F6 /* Item.swift in Sources */,
 				CF32FB5D26F958040058A19D /* SceneDelegate.swift in Sources */,
-				CFCA8DA72718533E005D7456 /* EmojiTextField.swift in Sources */,
 				CFCA8DA527185004005D7456 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,6 +687,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CFCA8DA827185593005D7456 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -699,6 +707,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CF099AA1271700F5006EB7F6 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		CFCA8DA927185593005D7456 /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFCA8DA827185593005D7456 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

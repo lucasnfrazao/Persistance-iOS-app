@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class CategoryViewController: UIViewController {
 
@@ -152,7 +153,50 @@ extension CategoryViewController: UITableViewDataSource {
         cell.title.text = categories?[indexPath.row].name ?? "No Categories Yet"
         cell.emoji.text = categories?[indexPath.row].emoji ?? "🤯"
         
+        //cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Yet"
+        
+        cell.delegate = self
+        
         return cell
+    }
+    
+    
+}
+
+extension CategoryViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            if let category = self.categories?[indexPath.row] {
+               
+                do {
+                   try self.realm.write {
+                        self.realm.delete(category)
+                        
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+               
+                //self.tableView.reloadData()
+            }
+            
+            
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(systemName: "trash.fill")
+
+        return [deleteAction]
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
     }
     
     
